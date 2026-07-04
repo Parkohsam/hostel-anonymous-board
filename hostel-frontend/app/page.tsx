@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { gql } from "@apollo/client";
 import type { TypedDocumentNode } from "@apollo/client";
 import { useQuery, useMutation } from "@apollo/client/react";
-import { PostCard } from "@/app/component/postcard";
+import { PostThread } from "@/app/component/postThread";
 
 interface Post {
   id: string;
@@ -54,9 +54,15 @@ function getRotation(id: string): number {
 
 export default function FeedPage() {
   const [content, setContent] = useState("");
+  const [hasLoadedOnce, setHasLoadedOnce] = useState(false);
   const { data, loading, error, refetch } = useQuery(GET_POSTS, {
     pollInterval: 5000,
   });
+
+  useEffect(() => {
+    if (data) setHasLoadedOnce(true);
+  }, [data]);
+
   const [createPost, { loading: posting, error: postError, reset }] =
     useMutation(CREATE_POST);
 
@@ -107,7 +113,7 @@ export default function FeedPage() {
         </button>
       </form>
 
-      {loading && (
+      {loading && !hasLoadedOnce && (
         <p className="text-[var(--color-whisper-grey)]">Loading the board...</p>
       )}
 
@@ -125,7 +131,7 @@ export default function FeedPage() {
 
       <div className="grid gap-8 sm:grid-cols-2">
         {data?.posts.map((post) => (
-          <PostCard
+          <PostThread
             key={post.id}
             id={post.id}
             content={post.content}
