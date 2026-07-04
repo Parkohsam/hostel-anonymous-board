@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  /* Color tokens */
+  --color-cork-shadow: #211814;
+  --color-board-cork: #4a3626;
+  --color-lamp-amber: #e8a33d;
+  --color-index-card: #f0e6d2;
+  --color-pin-red: #c1443c;
+  --color-whisper-grey: #9c8b76;
+
+  /* Font tokens (populated by next/font in layout.tsx) */
+  --font-sans: var(--font-body);
+  --font-display-face: var(--font-display);
+  --font-mono-face: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--color-cork-shadow);
+  color: var(--color-index-card);
+  font-family: var(--font-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display-face), serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.font-mono-id {
+  font-family: var(--font-mono-face), monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

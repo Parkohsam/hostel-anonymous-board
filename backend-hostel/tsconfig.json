@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    // Environment
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "types": ["node"],
+
+    // Native TS execution support (Node 24)
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+    "noEmit": true,
+
+    // Strictness
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  }
+}
