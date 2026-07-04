@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { gql } from "@apollo/client";
 import type { TypedDocumentNode } from "@apollo/client";
@@ -83,11 +83,16 @@ export default function PostDetailPage() {
     const postId = params.id;
 
     const [replyText, setReplyText] = useState("");
+    const [postLoadedOnce, setPostLoadedOnce] = useState(false);
 
     const { data: postData, loading: postLoading } = useQuery(GET_POST, {
         variables: { id: postId },
         pollInterval: 5000,
     });
+
+    useEffect(() => {
+        if (postData) setPostLoadedOnce(true);
+    }, [postData]);
 
     const {
         data: commentsData,
@@ -110,7 +115,7 @@ export default function PostDetailPage() {
         refetchComments();
     }
 
-    if (postLoading) {
+    if (postLoading && !postLoadedOnce) {
         return (
             <main className="mx-auto max-w-2xl px-4 py-10">
                 <p className="text-[var(--color-whisper-grey)]">Loading...</p>
@@ -163,7 +168,7 @@ export default function PostDetailPage() {
             </form>
 
             <div className="space-y-4">
-                {commentsLoading && (
+                {commentsLoading && !commentsData && (
                     <p className="text-[var(--color-whisper-grey)]">Loading replies...</p>
                 )}
 
