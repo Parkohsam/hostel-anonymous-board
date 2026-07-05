@@ -18,14 +18,18 @@ async function startServer() {
   await connectDB();
 
   const app = express();
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    })
+  );
 
   const yoga = createYoga({
     schema: createSchema({
       typeDefs,
-      resolvers: [healthResolvers, authResolvers, postResolvers, commentResolvers, moderationResolvers , reportResolvers],
+      resolvers: [healthResolvers, authResolvers, postResolvers, commentResolvers, moderationResolvers, reportResolvers],
     }),
-     context: createContext,
+    context: createContext,
     graphqlEndpoint: "/graphql",
   });
 
